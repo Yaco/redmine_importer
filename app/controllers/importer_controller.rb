@@ -196,9 +196,26 @@ class ImporterController < ApplicationController
     end
     @user_by_login[login]
   end
+
   def user_id_for_login!(login)
     user = user_for_login!(login)
     user ? user.id : nil
+  end
+
+  def issue_in_project_hierarchy?(issue)
+    bool = false
+
+    if issue.project.id == @project.id
+      bool = true
+    else
+      @project.hierarchy.each do |proj|
+        if issue.project.id == proj.id
+          bool = true
+        end
+      end
+    end
+    
+    bool
   end
     
   
@@ -288,6 +305,8 @@ class ImporterController < ApplicationController
       flash[:error] = unique_error
       return
     end
+
+    # BEGIN CSV ROW LOOP
 
     CSV.new(iip.csv_data, {:headers=>true,
                            :encoding=>iip.encoding,
@@ -547,7 +566,9 @@ class ImporterController < ApplicationController
 
       end
   
-    end # do
+    end 
+
+    #END CSV ROW LOOP
     
     if @failed_issues.size > 0
       @failed_issues = @failed_issues.sort
@@ -567,9 +588,11 @@ private
     @project = Project.find(params[:project_id])
   end
 
+
   def flash_message(type, text)
     flash[type] ||= ""
     flash[type] += "#{text}<br/>"
   end
+
   
 end
