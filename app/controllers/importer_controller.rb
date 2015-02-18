@@ -320,13 +320,15 @@ class ImporterController < ApplicationController
       #timesheet_status = to_boolean(row[attrs_map["timesheet"]])
       timesheet_status = true
 
-      if !timesheet_status
-
-
-        project = Project.find_by_name(row[attrs_map["project"]])
+      project = Project.find_by_name(row[attrs_map["project"]])
         if !project
           project = @project
         end
+
+      if !timesheet_status
+
+
+        
 
         begin
           row.each do |k, v|
