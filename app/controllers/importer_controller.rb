@@ -27,6 +27,7 @@ class ImporterController < ApplicationController
   end
 
   def match
+    #NEW COMMENT
     # Delete existing iip to ensure there can't be two iips for a user
     ImportInProgress.delete_all(["user_id = ?",User.current.id])
     # save import-in-progress data
