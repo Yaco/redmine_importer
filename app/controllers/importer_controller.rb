@@ -23,7 +23,7 @@ class ImporterController < ApplicationController
     :start_date, :due_date, :done_ratio, :estimated_hours,
     :parent_issue, :watchers ]
 
-  TIME_ENTRY_ISSUE_ATTRS = [:user_id, :update_date, :hours, :comment, :activity, :notes]
+  TIME_ENTRY_ISSUE_ATTRS = [:user_login, :update_date, :hours, :comment, :activity, :notes]
   
   def index
   end
@@ -577,7 +577,14 @@ class ImporterController < ApplicationController
 
         end
       else
-
+        time_entry = TimeEntry.new
+        time_entry.issue_id = row[attrs_map["Id"]]
+        time_entry.spent_on = Date.parse(row[attrs_map["update_date"]])
+        time_entry.activity = TimeEntryActivity.find_by_name(row[attrs_map["activity"]])
+        time_entry.hours = row[attrs_map["hours"]]
+        time_entry.comments = row[attrs_map["comment"]]
+        time_entry.user = user_by_login(row[attrs_map["user_login"]])
+        time_entry.save
       end # ENDIF
     end 
 
