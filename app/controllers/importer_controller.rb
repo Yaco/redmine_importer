@@ -320,7 +320,7 @@ class ImporterController < ApplicationController
       #timesheet_status = to_boolean(row[attrs_map["timesheet"]])
       timesheet_status = true
 
-      if timesheet_status
+      if !timesheet_status
 
 
         project = Project.find_by_name(row[attrs_map["project"]])
@@ -583,8 +583,8 @@ class ImporterController < ApplicationController
         time_entry.activity = TimeEntryActivity.find_by_name(row[attrs_map["activity"]])
         time_entry.hours = row[attrs_map["hours"]]
         time_entry.comments = row[attrs_map["comment"]]
-        time_entry.user = user_by_login(row[attrs_map["user_login"]])
-        time_entry.save
+        time_entry.user = User.find_by_login(row[attrs_map["user_login"]])
+        time_entry.save!
       end # ENDIF
     end 
 
