@@ -22,6 +22,8 @@ class ImporterController < ApplicationController
     :author, :description, :category, :priority, :tracker, :status,
     :start_date, :due_date, :done_ratio, :estimated_hours,
     :parent_issue, :watchers ]
+
+  TIME_ENTRY_ISSUE_ATTRS = [:user_id, :update_date, :hours, :comment, :activity, :notes]
   
   def index
   end
@@ -129,6 +131,11 @@ class ImporterController < ApplicationController
     IssueRelation::TYPES.each_pair do |rtype, rinfo|
       @attrs.push([l_or_humanize(rinfo[:name]),rtype])
     end
+  
+    TIME_ENTRY_ISSUE_ATTRS.each do |attr|
+      @attrs.push([l_or_humanize(attr, :prefix=>"field_"), attr])
+    end
+
     @attrs.sort!
   end
   
