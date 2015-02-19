@@ -582,17 +582,9 @@ class ImporterController < ApplicationController
         #TODO: check if issue id exists
         begin
 
-          time_date = Date.parse(row[attrs_map["update_date"]])
-
-          rescue ArgumentError
-            @failed_count += 1
-            @failed_issues[@failed_count] = row
-            @messages << "#{@failed_count}: The date is invalid"
-          next
-
 
           time_entry = TimeEntry.new(:issue_id => row[attrs_map["id"]], 
-                                    :spent_on => time_date,
+                                    :spent_on => Date.parse(row[attrs_map["update_date"]]),
                                     :activity => TimeEntryActivity.find_by_name(row[attrs_map["activity"]]),
                                     :hours => row[attrs_map["hours"]],
                                     :comments => row[attrs_map["comment"]], 
@@ -601,13 +593,16 @@ class ImporterController < ApplicationController
 
           
 
-          unless time_entry.save
+          time_entry.save
+          
+          rescue
             @failed_count += 1
             @failed_issues[@failed_count] = row
             @messages << "Warning: The following data-validation errors occurred on time_entry #{@failed_count} in the list below"
             time_entry.errors.full_messages.each do |attr, error_message|
               @messages << "Error: #{attr} #{error_message}"
             end
+            next
           else
 
             @handle_count += 1
