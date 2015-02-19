@@ -582,27 +582,36 @@ class ImporterController < ApplicationController
         #TODO: check if issue id exists
         begin
 
-        time_entry = TimeEntry.new(:issue_id => row[attrs_map["id"]], 
-                                  :spent_on => Date.parse(row[attrs_map["update_date"]]),
-                                  :activity => TimeEntryActivity.find_by_name(row[attrs_map["activity"]]),
-                                  :hours => row[attrs_map["hours"]],
-                                  :comments => row[attrs_map["comment"]], 
-                                  :user => User.find_by_login(row[attrs_map["user_login"]]))
-        #time_entry.save!
+          time_date = Date.parse(row[attrs_map["update_date"]])
 
-        
-
-        unless time_entry.save
+        rescue ArgumentError
           @failed_count += 1
           @failed_issues[@failed_count] = row
-          @messages << "Warning: The following data-validation errors occurred on time_entry #{@failed_count} in the list below"
-          time_entry.errors.each do |attr, error_message|
-            @messages << "Error: #{attr} #{error_message}"
+          @messages << "#{@failed_count}: The date is invalid"
+          next
+
+
+          time_entry = TimeEntry.new(:issue_id => row[attrs_map["id"]], 
+                                    :spent_on => time_date),
+                                    :activity => TimeEntryActivity.find_by_name(row[attrs_map["activity"]]),
+                                    :hours => row[attrs_map["hours"]],
+                                    :comments => row[attrs_map["comment"]], 
+                                    :user => User.find_by_login(row[attrs_map["user_login"]]))
+          #time_entry.save!
+
+          
+
+          unless time_entry.save
+            @failed_count += 1
+            @failed_issues[@failed_count] = row
+            @messages << "Warning: The following data-validation errors occurred on time_entry #{@failed_count} in the list below"
+            time_entry.errors.each do |attr, error_message|
+              @messages << "Error: #{attr} #{error_message}"
+            end
+          else
+
+            @handle_count += 1
           end
-        else
-
-          @handle_count += 1
-
         end
 
       end # ENDIF
