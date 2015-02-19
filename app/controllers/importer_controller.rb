@@ -584,11 +584,7 @@ class ImporterController < ApplicationController
 
           time_date = Date.parse(row[attrs_map["update_date"]])
 
-        rescue ArgumentError
-          @failed_count += 1
-          @failed_issues[@failed_count] = row
-          @messages << "#{@failed_count}: The date is invalid"
-          next
+        
 
 
           time_entry = TimeEntry.new(:issue_id => row[attrs_map["id"]], 
@@ -611,6 +607,13 @@ class ImporterController < ApplicationController
           else
 
             @handle_count += 1
+
+          rescue ArgumentError
+            @failed_count += 1
+            @failed_issues[@failed_count] = row
+            @messages << "#{@failed_count}: The date is invalid"
+            next
+
           end
         end
 
