@@ -579,15 +579,14 @@ class ImporterController < ApplicationController
 
         end
       else
-        time_entry = TimeEntry.new(:issue_id => row[attrs_map["Id"]], 
+        @time_entry = TimeEntry.new(:issue => Issue.find_by_id(row[attrs_map["Id"]]), 
                                   :spent_on => Date.parse(row[attrs_map["update_date"]]),
                                   :activity => TimeEntryActivity.find_by_name(row[attrs_map["activity"]]),
                                   :hours => row[attrs_map["hours"]],
                                   :comments => row[attrs_map["comment"]], 
                                   :user => User.find_by_login(row[attrs_map["user_login"]]),
-                                  #:project_id => Project.find_by_id(row[attrs_map["project"]]))
-                                  :project_id => @project)
-        time_entry.save!
+                                  :project => Project.find_by_id(row[attrs_map["project"]]))
+        @time_entry.save!
       end # ENDIF
     end 
 
