@@ -601,18 +601,13 @@ class ImporterController < ApplicationController
             @failed_count += 1
             @failed_issues[@failed_count] = row
             @messages << "Warning: The following data-validation errors occurred on time_entry #{@failed_count} in the list below"
-            time_entry.errors.each do |attr, error_message|
+            time_entry.errors.full_messages.each do |attr, error_message|
               @messages << "Error: #{attr} #{error_message}"
             end
           else
 
             @handle_count += 1
 
-          rescue ArgumentError
-            @failed_count += 1
-            @failed_issues[@failed_count] = row
-            @messages << "#{@failed_count}: The date is invalid"
-            next
 
           end
         end
