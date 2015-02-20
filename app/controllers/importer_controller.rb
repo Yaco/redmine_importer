@@ -579,7 +579,11 @@ class ImporterController < ApplicationController
 
         end
       else
-        #TODO: check if issue id exists
+        #TODO:  Check if issue id exists
+        #Check Activity valid
+        #Check Date valid
+        #other checks already performed
+
         begin
           time_entry = TimeEntry.new(:issue_id => row[attrs_map["id"]], 
                                     :spent_on => Date.parse(row[attrs_map["update_date"]]),
@@ -601,7 +605,7 @@ class ImporterController < ApplicationController
 
 
         end
-      
+      end
 
       end # ENDIF
     end 
