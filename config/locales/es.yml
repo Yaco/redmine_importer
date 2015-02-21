@@ -1,0 +1,42 @@
+es:
+  label_import: "Importar"
+  label_issue_importer: "Importador de peneeds to refer to other tasksticiones"
+  label_upload_notice: "Selecciona el archivo CSV a importar. El archivo importado debe tener una fila de encabezado. Tamaño máximo de 4MB."
+  label_upload_format: "Configuración del formato de archivo"
+  label_upload_encoding: "Codificación:"
+  label_upload_splitter: "Separador de campos:"
+  label_upload_wrapper: "Delimitador de textos:"
+  
+  label_load_rules: "Cargar reglas guardadas"
+  label_toplines: "Refiere a las líneas superiores del archivo %{value}："
+  label_match_columns: "Columnas coincidentes"
+  label_match_select: "Seleciona el campo para asignar a cada columna:"
+  label_import_rule: "Reglas de importación"
+  label_default_tracker: "Tracker por defecto:"
+  label_importer_send_emails: "Enviar notificaciones por e-mail"
+  label_importer_add_categories: "Agregar automáticamente las categorías"
+  label_importer_add_versions: "Agregar automáticamente las versiones"
+  label_importer_use_anonymous: "Reemplazar usuarios desconocidos con el usuario Anónimo"
+  label_update_issue: "Actualizar peticiones existentes"
+  label_journal_field: "Selecciona la columna para usar como nota"
+  label_unique_field: "Selecciona un campo con valor único (requerido para actualizar peticiones existentes o importar relaciones):"
+  label_update_other_project: "Permitir actualizar peticiones de otros proyectos"
+  label_ignore_non_exist: "Ignorar peticiones inexistentes"
+  label_rule_name: "Nombre de la regla de entrada"
+  
+  label_import_result: "Resultado de la importación"
+  label_result_notice: "%{handle_count} peticiones procesadas.  %{success_count} peticiones importadas con éxito."
+  label_result_projects: "Proyectos afectados:"
+  label_result_issues: "%{count} peticiones"
+  label_result_failed: "(%{count}) filas fallaron"
+  label_result_messages: "Mensajes"
+  
+  option_ignore: "Ignorar"
+  
+  button_upload: "Subir archivo"
+  button_submit: "Enviar"
+  button_save_rules_and_submit: "Guardar reglas de coincidencia y enviar"
+
+  text_rmi_specify_unique_field_for_update: "El 'campo con valor único' debe ser especificado porque 'Actualizar peticiones existentes' está activado"
+  text_rmi_specify_unique_field_for_column: "El 'campo con valor único' debe ser especificado porque la columna %{column} debe referirse a otra patición" 
+
